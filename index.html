@@ -284,6 +284,41 @@ textarea{resize:vertical}
 .mini .mt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mini .mw{font-size:12px;color:var(--ink-2);white-space:nowrap}
 
+/* priorities matrix + deadlines */
+.itx{flex:1;min-width:0}
+.item .it{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.itd{font-size:12px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dl{font-size:12px;color:var(--ink-2);white-space:nowrap}
+.dl.late{color:var(--danger);font-weight:600}
+.mxbar{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
+.mxrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.mxrow .dates{display:flex;gap:8px;align-items:center}
+.mxrow .dates input{width:auto}
+.inl{display:inline-flex;gap:8px;align-items:center;font-size:13px}
+.inl select{width:auto;padding:4px 8px;border-radius:8px}
+.startbox{display:flex;gap:16px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--now);border-radius:12px;padding:16px 20px;margin-bottom:18px}
+.startbox.calm{border-left-color:var(--accent)}
+.st-t{font-family:var(--display);font-size:26px;line-height:1.2}
+.mxgrid{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto 1fr 1fr;gap:12px}
+.axh{display:flex;align-items:flex-end;padding:0 4px 2px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.axv{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--ink-2)}
+.quad{border:1px solid var(--line);border-top:3px solid var(--qc);border-radius:16px;padding:18px 18px 12px;background:color-mix(in srgb,var(--qc) 5%,var(--surface));min-height:210px;min-width:0}
+.quad.over{outline:1.5px dashed var(--accent);outline-offset:-3px}
+.qh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:14px}
+.qh h2{font-family:var(--display);font-weight:400;font-size:26px}
+.qh small{display:block;color:var(--ink-2);font-size:12px}
+.qn{font-size:13px;color:var(--ink-2);white-space:nowrap}
+.mc{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;margin-bottom:6px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:10px;cursor:grab}
+.mc.done{opacity:.5}
+.mc.done .m1{text-decoration:line-through}
+.mct{min-width:0;flex:1}
+.m1{font-weight:500}
+.m2{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--ink-2);margin-top:2px}
+.m2 .late{color:var(--danger);font-weight:600}
+.mx-un{margin-top:16px;border:1.5px dashed var(--line);border-radius:16px;padding:16px 18px}
+.mx-un.over{border-color:var(--accent)}
+.mx-un .mcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 10px}
+
 /* modal + toast */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--scrim);align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));z-index:50}
 .overlay.open{display:flex}
@@ -311,6 +346,9 @@ textarea{resize:vertical}
   .brand{display:none}
   .navb{flex:1;flex-direction:column;gap:2px;justify-content:center;align-items:center;font-size:11px;padding:6px 2px;text-align:center;border-radius:10px}
   .navb.on{box-shadow:none;background:var(--surface-2)}
+  .mxgrid{grid-template-columns:minmax(0,1fr)}
+  .axh,.axv,.mxgrid>span{display:none}
+  .startbox{flex-direction:column;align-items:flex-start}
   .main{padding:24px 16px 32px}
   .viewhead h1{font-size:32px}
   .s4,.s5,.s6,.s7,.s8{grid-column:span 12}
@@ -335,6 +373,7 @@ textarea{resize:vertical}
     <button class="navb" data-act="nav" data-view="overview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button>
     <button class="navb" data-act="nav" data-view="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
     <button class="navb" data-act="nav" data-view="boards"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="10" rx="1.5"/><rect x="16" y="4" width="5" height="13" rx="1.5"/></svg>Boards</button>
+    <button class="navb" data-act="nav" data-view="matrix"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M12 3v18M3 12h18"/></svg>Priorities</button>
     <button class="navb" data-act="nav" data-view="timeline"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h16M4 18h12"/></svg>Timeline</button>
     <button class="navb" data-act="nav" data-view="plans"><svg viewBox="0 0 24 24"><path d="M5 21V4m0 0h12l-2 4 2 4H5"/></svg>Grand plans</button>
   </nav>
@@ -395,7 +434,7 @@ function clean(o){var r={};Object.keys(o||{}).forEach(function(k){if(o[k]!==unde
 
 /* ---------- state ---------- */
 var storageOK=true;
-function blank(){return {cats:DEFAULT_CATS.map(function(c){return Object.assign({},c)}),tasks:[],blocks:[],plans:[],weeks:{},months:{},terms:DEFAULT_TERMS.map(function(t){return Object.assign({},t)}),termFocus:{}}}
+function blank(){return {cats:DEFAULT_CATS.map(function(c){return Object.assign({},c)}),tasks:[],blocks:[],plans:[],weeks:{},months:{},terms:DEFAULT_TERMS.map(function(t){return Object.assign({},t)}),termFocus:{},settings:{urgentDays:3}}}
 function obj(x){return (x&&typeof x==='object'&&!Array.isArray(x))?x:{}}
 function normalise(d){
   var b=blank();d=d||{};
@@ -414,7 +453,8 @@ function normalise(d){
     plans:Array.isArray(d.plans)?d.plans.filter(function(p){return p&&p.id&&p.title}):[],
     weeks:obj(d.weeks),months:obj(d.months),
     terms:Array.isArray(d.terms)?d.terms.filter(function(t){return t&&t.id&&t.name&&t.start&&t.end}):b.terms,
-    termFocus:obj(d.termFocus)
+    termFocus:obj(d.termFocus),
+    settings:{urgentDays:Math.max(1,Math.min(14,Number(obj(d.settings).urgentDays)||3))}
   };
 }
 function load(){
@@ -423,7 +463,7 @@ function load(){
 }
 var S=load();
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(S));storageOK=true}catch(e){storageOK=false}}
-var UI={view:'overview',day:todayISO(),group:'status',filter:'all',tlScale:'week',tlOff:0,scrollCal:true,qaCat:null};
+var UI={view:'overview',day:todayISO(),group:'status',filter:'all',tlScale:'week',tlOff:0,scrollCal:true,qaCat:null,mx:{range:'week',from:'',to:'',cat:'all',done:false,overdue:true,undated:false}};
 var M=null;      /* open modal */
 var drag=null;   /* active drag */
 
@@ -434,7 +474,7 @@ function blockById(id){return S.blocks.filter(function(b){return b.id===id})[0]}
 function planById(id){return S.plans.filter(function(p){return p.id===id})[0]}
 function termById(id){return S.terms.filter(function(t){return t.id===id})[0]}
 function isDone(t){return t.status==='done'}
-function newTask(p){return Object.assign({id:uid(),title:'',cat:S.cats[0].id,status:'backlog',date:null,start:null,dur:60,notes:'',blockId:null,created:Date.now()},p||{})}
+function newTask(p){return Object.assign({id:uid(),title:'',cat:S.cats[0].id,status:'backlog',date:null,start:null,dur:60,notes:'',blockId:null,deadline:null,important:null,urgency:'auto',created:Date.now()},p||{})}
 function byDue(a,b){return (a.date||'9999').localeCompare(b.date||'9999')||((a.start==null?1e4:a.start)-(b.start==null?1e4:b.start))||((a.created||0)-(b.created||0))}
 function statusName(id){var s=STATUSES.filter(function(x){return x.id===id})[0];return s?s.name:id}
 function setStatus(t,s){var was=isDone(t);t.status=s;if(s==='done'&&!was)t.doneAt=todayISO();else if(s!=='done'&&was)delete t.doneAt}
@@ -449,6 +489,24 @@ function defStart(day){
   if(day===todayISO()){var n=new Date();return Math.min(22*60,(n.getHours()+1)*60)}
   return 9*60;
 }
+
+/* ---------- priority helpers (urgency, deadlines, Eisenhower matrix) ---------- */
+function urgentDays(){return (S.settings&&S.settings.urgentDays)||3}
+function isUrgent(t){
+  if(t.urgency==='urgent')return true;
+  if(t.urgency==='normal')return false;
+  return !!t.deadline&&daysBetween(todayISO(),t.deadline)<=urgentDays();
+}
+function isRated(t){return t.important===true||t.important===false}
+function quadOf(t){return (isUrgent(t)?'u':'n')+(t.important?'i':'x')}
+function dueDate(t){var a=[t.date,t.deadline].filter(Boolean).sort();return a[0]||''}
+function dlHTML(t){
+  if(!t.deadline)return '';
+  var late=t.deadline<todayISO()&&!isDone(t);
+  return '<span class="dl'+(late?' late':'')+'">Due '+fDM(t.deadline)+'</span>';
+}
+function urgPill(t){return (!isDone(t)&&isUrgent(t))?'<span class="pill bad">Urgent</span>':''}
+function selOpts(opts,cur){return opts.map(function(o){return '<option value="'+o[0]+'"'+(o[0]===cur?' selected':'')+'>'+o[1]+'</option>'}).join('')}
 
 /* ---------- stats helpers ---------- */
 function doneDate(t){return t.doneAt||t.date||iso(new Date(t.created||Date.now()))}
@@ -530,7 +588,8 @@ function itemHTML(t,showDate){
   var c=catOf(t.cat);
   return '<div class="item'+(isDone(t)?' done':'')+'" draggable="true" data-kind="task" data-id="'+t.id+'" data-act="edit" style="--c:'+esc(c.color)+'">'+
     '<button class="check'+(isDone(t)?' on':'')+'" data-act="toggle" data-id="'+t.id+'" aria-label="Mark as done"></button>'+
-    '<span class="it">'+esc(t.title)+'</span>'+tagHTML(t.cat)+
+    '<div class="itx"><div class="it">'+esc(t.title)+'</div>'+(t.notes?'<div class="itd">'+esc(t.notes)+'</div>':'')+'</div>'+
+    urgPill(t)+dlHTML(t)+tagHTML(t.cat)+
     (showDate&&t.date?'<span class="when">'+fDM(t.date)+'</span>':'')+'</div>';
 }
 function calHTML(sched,blocks,isToday){
@@ -627,9 +686,77 @@ function vBoards(){
         var late=t.date&&t.date<td&&!isDone(t);
         return '<div class="kc'+(isDone(t)?' done':'')+'" draggable="true" data-kind="task" data-id="'+t.id+'" data-act="edit" style="--c:'+esc(col(t.cat))+'"><div class="kt">'+esc(t.title)+'</div>'+(t.notes?'<div class="kd">'+esc(t.notes)+'</div>':'')+'<div class="km">'+
           (mode==='status'?tagHTML(t.cat):'<span>'+esc(statusName(t.status))+'</span>')+
-          (t.date?'<span class="'+(late?'late':'')+'">'+fShort(t.date)+(t.start!=null?' '+fTime(t.start):'')+'</span>':'')+'</div></div>';
+          (t.date?'<span class="'+(late?'late':'')+'">'+fShort(t.date)+(t.start!=null?' '+fTime(t.start):'')+'</span>':'')+dlHTML(t)+urgPill(t)+'</div></div>';
       }).join('')+(c.hidden?'<p class="more">and '+c.hidden+' older done</p>':'')+'</section>';
   }).join('')+'</div>';
+  return h;
+}
+
+/* ---------- Priorities (Eisenhower matrix) ---------- */
+var QUADS=[
+  {id:'ui',title:'Do first',sub:'Urgent and important',color:'var(--now)',empty:'Nothing is on fire.'},
+  {id:'ni',title:'Plan it',sub:'Important, not urgent',color:'var(--accent)',empty:'Nothing planned here yet.'},
+  {id:'ux',title:'Hand off or batch',sub:'Urgent, less important',color:'#C48A1A',empty:'Nothing here.'},
+  {id:'nx',title:'Drop or defer',sub:'Neither urgent nor important',color:'var(--ink-2)',empty:'Nothing here.'}
+];
+function mxRange(){
+  var td=todayISO(),r=UI.mx.range;
+  if(r==='today')return {a:td,b:td};
+  if(r==='week'){var w=monday(td);return {a:w,b:addDays(w,6)}}
+  if(r==='next7')return {a:td,b:addDays(td,6)};
+  if(r==='month'){var n=new Date();return {a:iso(new Date(n.getFullYear(),n.getMonth(),1)),b:iso(new Date(n.getFullYear(),n.getMonth()+1,0))}}
+  if(r==='custom'){var a=UI.mx.from||td,b=UI.mx.to||a;if(b<a){var x=a;a=b;b=x}return {a:a,b:b}}
+  return null;
+}
+function inMatrix(t){
+  var mx=UI.mx;
+  if(!mx.done&&isDone(t))return false;
+  if(mx.cat!=='all'&&t.cat!==mx.cat)return false;
+  var R=mxRange();if(!R)return true;
+  var ds=[t.date,t.deadline].filter(Boolean);
+  if(!ds.length)return mx.undated&&!isDone(t);
+  if(ds.some(function(d){return d>=R.a&&d<=R.b}))return true;
+  return mx.overdue&&!isDone(t)&&ds.some(function(d){return d<R.a});
+}
+function mxCard(t){
+  var late=t.deadline&&t.deadline<todayISO()&&!isDone(t);
+  return '<div class="mc'+(isDone(t)?' done':'')+'" draggable="true" data-kind="task" data-id="'+t.id+'" data-act="edit" style="--c:'+esc(col(t.cat))+'">'+
+    '<button class="check'+(isDone(t)?' on':'')+'" data-act="toggle" data-id="'+t.id+'" aria-label="Mark as done"></button>'+
+    '<div class="mct"><div class="m1">'+esc(t.title)+'</div><div class="m2">'+tagHTML(t.cat)+
+    (t.deadline?'<span class="'+(late?'late':'')+'">Due '+fShort(t.deadline)+', '+rel(t.deadline)+'</span>':(t.date?'<span>Planned '+fShort(t.date)+'</span>':''))+'</div></div></div>';
+}
+function vMatrix(){
+  var mx=UI.mx,R=mxRange(),list=S.tasks.filter(inMatrix);
+  var by={ui:[],ni:[],ux:[],nx:[],un:[]};
+  list.forEach(function(t){(isRated(t)?by[quadOf(t)]:by.un).push(t)});
+  function srt(a,b){return (isDone(a)-isDone(b))||((a.deadline||a.date||'9999').localeCompare(b.deadline||b.date||'9999'))||((a.created||0)-(b.created||0))}
+  Object.keys(by).forEach(function(k){by[k].sort(srt)});
+  function open(a){return a.filter(function(t){return !isDone(t)})}
+  var rangeLabel=!R?'all dates':(R.a===R.b?fShort(R.a):fDM(R.a)+' to '+fDM(R.b));
+  var h='<div class="viewhead"><div><h1>Priorities</h1><p class="sub">Sort what is on your plate by what is urgent and what is important.</p></div><div class="actions"><button class="btn primary" data-act="new-item" data-t="task">+ Task</button></div></div>';
+  h+='<div class="mxbar"><div class="mxrow"><div class="seg" role="group" aria-label="Date range">'+
+    [['today','Today'],['week','This week'],['next7','Next 7 days'],['month','This month'],['all','All'],['custom','Custom']].map(function(x){return '<button class="'+(mx.range===x[0]?'on':'')+'" data-act="mx-range" data-r="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>'+
+    (mx.range==='custom'?'<div class="dates"><input type="date" id="mx-from" value="'+esc(mx.from||todayISO())+'" aria-label="From"><span class="muted">to</span><input type="date" id="mx-to" value="'+esc(mx.to||mx.from||todayISO())+'" aria-label="To"></div>':'')+'</div>'+
+    '<div class="mxrow"><div class="chips"><button class="chip'+(mx.cat==='all'?' on':'')+'" data-act="mx-cat" data-c="all">All categories</button>'+
+    S.cats.map(function(c){return '<button class="chip'+(mx.cat===c.id?' on':'')+'" data-act="mx-cat" data-c="'+esc(c.id)+'" style="--c:'+esc(c.color)+'"><i class="dot"></i>'+esc(c.name)+'</button>'}).join('')+'</div></div>'+
+    '<div class="mxrow">'+(R?'<button class="chip'+(mx.overdue?' on':'')+'" data-act="mx-toggle" data-k="overdue">Include overdue</button><button class="chip'+(mx.undated?' on':'')+'" data-act="mx-toggle" data-k="undated">Include tasks with no date</button>':'')+
+    '<button class="chip'+(mx.done?' on':'')+'" data-act="mx-toggle" data-k="done">Show done</button>'+
+    '<label class="inl muted">Urgent means due within <select id="mx-urg">'+[1,2,3,5,7,14].map(function(n){return '<option value="'+n+'"'+(n===urgentDays()?' selected':'')+'>'+plural(n,'day','days')+'</option>'}).join('')+'</select></label></div></div>';
+  var nOpen=open(list).length;
+  h+='<p class="muted" style="margin:0 0 16px">'+plural(list.length,'task','tasks')+' for '+rangeLabel+(mx.cat==='all'?'':', '+esc(catOf(mx.cat).name))+', '+nOpen+' still open.</p>';
+  var first=open(by.ui)[0],alt=first?null:open(by.ni)[0];
+  if(first)h+='<div class="startbox"><div><div class="st-t">'+esc(first.title)+'</div><div class="muted">Your most pressing task'+(first.deadline?', due '+fShort(first.deadline)+' ('+rel(first.deadline)+')':', marked urgent and important')+'.</div></div><button class="btn primary" data-act="edit" data-id="'+first.id+'">Open</button></div>';
+  else if(alt)h+='<div class="startbox calm"><div><div class="st-t">'+esc(alt.title)+'</div><div class="muted">Nothing is urgent and important. A good moment to move this one forward.</div></div><button class="btn primary" data-act="edit" data-id="'+alt.id+'">Open</button></div>';
+  function quad(q){
+    var items=by[q.id];
+    return '<section class="quad" data-drop="quad" data-q="'+q.id+'" style="--qc:'+q.color+'"><div class="qh"><div><h2>'+q.title+'</h2><small>'+q.sub+'</small></div><span class="qn">'+open(items).length+' open</span></div>'+
+      (items.length?items.map(mxCard).join(''):'<p class="muted" style="margin:0">'+q.empty+'</p>')+'</section>';
+  }
+  h+='<div class="mxgrid"><span></span><div class="axh">Urgent</div><div class="axh">Not urgent</div>'+
+    '<div class="axv">Important</div>'+quad(QUADS[0])+quad(QUADS[1])+
+    '<div class="axv">Not important</div>'+quad(QUADS[2])+quad(QUADS[3])+'</div>';
+  h+='<section class="mx-un" data-drop="quad" data-q="un"><div class="th"><h2>Not rated yet</h2><span>'+by.un.length+'</span></div>'+
+    (by.un.length?'<div class="mcs">'+by.un.map(mxCard).join('')+'</div><p class="muted" style="font-size:13px;margin:8px 0 0">Drag a task into a quadrant, or open it to set its importance and urgency.</p>':'<p class="muted" style="margin:0">Every task in this view has been rated.</p>')+'</section>';
   return h;
 }
 
@@ -750,6 +877,7 @@ function vOverview(){
   var nextUp=nextItems.filter(function(x){return x.start+x.dur>nowMin})[0];
   var hr=now.getHours(),greet=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening';
   var empty=!S.tasks.length&&!S.plans.length&&!S.blocks.length;
+  var dofirst=S.tasks.filter(function(t){return !isDone(t)&&t.important===true&&isUrgent(t)}).length;
 
   var h='<div class="viewhead"><div><h1>Overview</h1><p class="sub">'+greet+'. '+fLong(td)+'.</p></div><div class="actions"><button class="btn" data-act="cats">Categories</button><button class="btn" data-act="backup">Back up</button><button class="btn primary" data-act="new-item" data-t="task">+ Task</button></div></div>';
   h+='<div class="bento">';
@@ -759,7 +887,7 @@ function vOverview(){
   var pct=todays.length?done/todays.length:0;
   h+='<section class="tile hero s8"><div class="hero-main"><h2 class="hero-t'+(W.main?'':' dim')+'">'+(W.main?esc(W.main):'No focus set for this week')+'</h2>'+
     '<p class="hero-s">'+mood(todays.length,done,st.n)+(N.main?' Next week: '+esc(N.main)+'.':'')+'</p>'+
-    '<div class="stats">'+(mins?'<span class="stat"><b>'+fDur(mins)+'</b> on the calendar</span>':'')+(nf?'<span class="stat"><b>'+nf+'</b> focus '+(nf===1?'block':'blocks')+'</span>':'')+(ne?'<span class="stat"><b>'+ne+'</b> '+(ne===1?'event':'events')+'</span>':'')+(nextUp?'<span class="stat">Next <b>'+fTime(nextUp.start)+'</b> '+esc(nextUp.title)+'</span>':'')+'</div>'+
+    '<div class="stats">'+(mins?'<span class="stat"><b>'+fDur(mins)+'</b> on the calendar</span>':'')+(nf?'<span class="stat"><b>'+nf+'</b> focus '+(nf===1?'block':'blocks')+'</span>':'')+(ne?'<span class="stat"><b>'+ne+'</b> '+(ne===1?'event':'events')+'</span>':'')+(dofirst?'<span class="stat"><b>'+dofirst+'</b> to do first</span>':'')+(nextUp?'<span class="stat">Next <b>'+fTime(nextUp.start)+'</b> '+esc(nextUp.title)+'</span>':'')+'</div>'+
     '<div class="hero-act"><button class="btn primary" data-act="nav" data-view="today">Open today</button><button class="btn" data-act="edit-focus" data-scale="week" data-key="'+wk+'">'+(W.main?'Change focus':'Set this week’s focus')+'</button></div></div>'+
     '<div class="ringbox">'+ring(pct,150,7,'var(--accent)','var(--surface-2)')+'<div class="ringc"><b>'+done+'<small>/'+todays.length+'</small></b><span>done today</span></div></div></section>';
 
@@ -806,18 +934,19 @@ function vOverview(){
     }).join(''):'<p class="muted">No grand plans yet.</p><button class="btn sm" data-act="new-plan">+ Grand plan</button>')+'</section>';
 
   /* attention + upcoming */
-  var overdue=S.tasks.filter(function(t){return t.date&&t.date<td&&!isDone(t)}).sort(byDue);
-  var soon=S.tasks.filter(function(t){return t.date&&t.date>td&&t.date<=addDays(td,7)&&!isDone(t)}).sort(byDue).slice(0,5);
+  var byDueDate=function(a,b){return dueDate(a).localeCompare(dueDate(b))};
+  var overdue=S.tasks.filter(function(t){var d=dueDate(t);return d&&d<td&&!isDone(t)}).sort(byDueDate);
+  var soon=S.tasks.filter(function(t){var d=dueDate(t);return d&&d>td&&d<=addDays(td,7)&&!isDone(t)}).sort(byDueDate).slice(0,5);
   function mini(t,w,first){return '<button class="mini'+(first?' first':'')+'" data-act="edit" data-id="'+t.id+'" style="--c:'+esc(col(t.cat))+'"><i class="dot"></i><span class="mt">'+esc(t.title)+'</span><span class="mw">'+w+'</span></button>'}
   h+='<section class="tile s12"><div class="two"><div><h3>Needs attention</h3>'+
-    (overdue.length?overdue.slice(0,5).map(function(t,i){return mini(t,rel(t.date),i===0)}).join('')+(overdue.length>5?'<p class="muted" style="font-size:13px">and '+(overdue.length-5)+' more.</p>':''):'<p class="muted">Nothing overdue. Nice.</p>')+'</div>'+
-    '<div><h3>Coming up in the next 7 days</h3>'+(soon.length?soon.map(function(t,i){return mini(t,fShort(t.date),i===0)}).join(''):'<p class="muted">No dated tasks in the next 7 days.</p>')+'</div></div></section>';
+    (overdue.length?overdue.slice(0,5).map(function(t,i){return mini(t,rel(dueDate(t)),i===0)}).join('')+(overdue.length>5?'<p class="muted" style="font-size:13px">and '+(overdue.length-5)+' more.</p>':''):'<p class="muted">Nothing overdue. Nice.</p>')+'</div>'+
+    '<div><h3>Coming up in the next 7 days</h3>'+(soon.length?soon.map(function(t,i){return mini(t,fShort(dueDate(t)),i===0)}).join(''):'<p class="muted">No dated tasks in the next 7 days.</p>')+'</div></div></section>';
   h+='</div>';
   return h;
 }
 
 /* ---------- render ---------- */
-var VIEWS={overview:vOverview,today:vToday,boards:vBoards,timeline:vTimeline,plans:vPlans};
+var VIEWS={overview:vOverview,today:vToday,boards:vBoards,matrix:vMatrix,timeline:vTimeline,plans:vPlans};
 function scrollCalDefault(cal){
   var day=UI.day,m;
   var starts=S.tasks.filter(function(t){return t.date===day&&t.start!=null}).map(function(t){return t.start})
@@ -889,7 +1018,11 @@ function taskModal(id,preset){
     '<label class="field"><span>Start time</span><input type="time" id="m-start" step="900" value="'+(t.start!=null?fTime(t.start):'')+'"></label>'+
     '<label class="field"><span>Length</span><select id="m-dur">'+durs.map(function(d){return '<option value="'+d+'"'+(d===(t.dur||60)?' selected':'')+'>'+fDur(d)+'</option>'}).join('')+'</select></label></div>'+
     '<label class="field"><span>Put it in a focus block</span><select id="m-block">'+blockOpts(bdate,t.blockId)+'</select></label>'+
-    '<label class="field"><span>Description</span><textarea id="m-notes" rows="3" placeholder="Anything you want to remember about this">'+esc(t.notes||'')+'</textarea></label>'+foot(id?'Delete':'')+'</div>');
+    '<div class="row3"><label class="field"><span>Deadline (optional)</span><input type="date" id="m-deadline" value="'+(t.deadline||'')+'"></label>'+
+    '<label class="field"><span>Importance</span><select id="m-imp">'+selOpts([['','Not rated'],['y','Important'],['n','Not important']],t.important===true?'y':(t.important===false?'n':''))+'</select></label>'+
+    '<label class="field"><span>Urgency</span><select id="m-urg">'+selOpts([['auto','Auto, from deadline'],['urgent','Urgent'],['normal','Not urgent']],t.urgency||'auto')+'</select></label></div>'+
+    '<p class="muted" style="margin:-6px 0 12px;font-size:13px">Auto marks a task urgent when its deadline is within '+plural(urgentDays(),'day','days')+'. Importance and urgency decide where it lands on the Priorities matrix.</p>'+
+    '<label class="field"><span>Description</span><textarea id="m-notes" rows="4" placeholder="Details, links, what done looks like">'+esc(t.notes||'')+'</textarea></label>'+foot(id?'Delete':'')+'</div>');
 }
 function itemModal(kind,id,preset){
   var b=id?blockById(id):Object.assign({kind:kind,title:'',cat:S.cats[0].id,date:UI.day,start:defStart(UI.day),dur:kind==='focus'?90:60,desc:''},clean(preset));
@@ -937,7 +1070,7 @@ function catRow(c){
 function catsModal(){
   openModal({type:'cats'},'<div class="sheet"><h2>Categories</h2><p class="muted" style="margin-top:-8px">These labels and colours are used everywhere. If you remove one, its tasks move to your first category.</p><div id="crows">'+S.cats.map(catRow).join('')+'</div><button class="btn sm" data-act="cat-add">Add category</button>'+foot('')+'</div>');
 }
-function exportData(){return {cats:S.cats,tasks:S.tasks,blocks:S.blocks,plans:S.plans,weeks:S.weeks,months:S.months,terms:S.terms,termFocus:S.termFocus}}
+function exportData(){return {cats:S.cats,tasks:S.tasks,blocks:S.blocks,plans:S.plans,weeks:S.weeks,months:S.months,terms:S.terms,termFocus:S.termFocus,settings:S.settings}}
 function backupModal(){
   openModal({type:'backup'},'<div class="sheet"><h2>Back up or restore</h2><p class="muted" style="margin-top:-8px">Your data is stored in this browser on this device. Copy the text below somewhere safe to keep a backup, or to move to another device.</p>'+
     '<label class="field"><span>Your data</span><textarea id="m-export" rows="5" readonly>'+esc(JSON.stringify(exportData()))+'</textarea></label><button class="btn sm" data-act="copy-export">Copy to clipboard</button>'+
@@ -953,7 +1086,9 @@ function saveModal(){
     var date=v('m-date')||null,start=parseTime(v('m-start')),blockId=v('m-block')||null;
     if(blockId){var bb=blockById(blockId);if(bb){date=bb.date;start=null}else blockId=null}
     if(start!=null&&!date)date=UI.day;
-    var vals={title:v('m-title').trim(),cat:v('m-cat'),date:date,start:start,blockId:blockId,dur:Number(v('m-dur'))||60,notes:v('m-notes').trim()};
+    var vals={title:v('m-title').trim(),cat:v('m-cat'),date:date,start:start,blockId:blockId,dur:Number(v('m-dur'))||60,notes:v('m-notes').trim(),
+      deadline:v('m-deadline')||null,important:v('m-imp')==='y'?true:(v('m-imp')==='n'?false:null),urgency:v('m-urg')||'auto'};
+    if(vals.deadline&&date&&date>vals.deadline)toast('Heads up: this is scheduled after its deadline');
     var t=M.id?taskById(M.id):null;
     if(!t){t=newTask(vals);S.tasks.push(t)}else Object.assign(t,vals);
     setStatus(t,v('m-status'));
@@ -1030,6 +1165,16 @@ function addExamples(){
   T('Shortlist roles to apply for',1,{status:'backlog'});
   T('Sketch the idea on one page',2,{status:'backlog'});
   T('Waiting on a reference letter',1,{status:'waiting'});
+  function P(title,off,imp){S.tasks.forEach(function(t){if(t.title===title){if(off!==null)t.deadline=addDays(td,off);t.important=imp}})}
+  P('Draft the intro of this week’s essay',2,true);
+  P('Annotate two papers',3,true);
+  P('Tidy CV bullet points',5,true);
+  P('Reply to the society sponsor email',1,true);
+  P('Book a room for the next meeting',6,false);
+  P('Read two papers for next week',9,true);
+  P('Submit expenses claim',1,false);
+  P('Shortlist roles to apply for',null,true);
+  P('Waiting on a reference letter',4,false);
   var hist=['Problem set','Reading notes','Email follow-up','Draft outline','Meeting prep','Review flashcards','Submit form','Plan the week'];
   [2,3,0,3,1,2,3,0,3,2,1,3,2,0,3,1,2,3,3,0,2,1,3,2,0,1,2,3,2,1,3,0,2,3,1,2,0,3,2,1,2,3,1,0,2,3,2,1].forEach(function(n,i){
     for(var k=0;k<n;k++){var dd=addDays(td,-(i+1));var t=T(hist[(i+k)%hist.length],(i+k)%S.cats.length,{status:'done',date:dd});t.doneAt=dd}
@@ -1084,6 +1229,9 @@ document.addEventListener('click',function(e){
     case 'filter':UI.filter=el.dataset.c;render();break;
     case 'cats':catsModal();break;
     case 'backup':backupModal();break;
+    case 'mx-range':UI.mx.range=el.dataset.r;if(UI.mx.range==='custom'&&!UI.mx.from){UI.mx.from=todayISO();UI.mx.to=addDays(todayISO(),13)}render();break;
+    case 'mx-cat':UI.mx.cat=el.dataset.c;render();break;
+    case 'mx-toggle':UI.mx[el.dataset.k]=!UI.mx[el.dataset.k];render();break;
     case 'tl-scale':UI.tlScale=el.dataset.s;UI.tlOff=0;render();break;
     case 'tl':if(el.dataset.set!=null)UI.tlOff=0;else UI.tlOff+=Number(el.dataset.d);render();break;
     case 'edit-focus':focusModal(el.dataset.scale,el.dataset.key);break;
@@ -1116,6 +1264,8 @@ document.addEventListener('click',function(e){
 });
 document.addEventListener('change',function(e){
   if(e.target.id==='qa-cat')UI.qaCat=e.target.value;
+  if(e.target.id==='mx-urg'){S.settings.urgentDays=Number(e.target.value)||3;save();render()}
+  if(e.target.id==='mx-from'||e.target.id==='mx-to'){UI.mx[e.target.id==='mx-from'?'from':'to']=e.target.value;render()}
   if(e.target.id==='m-date'&&M&&M.type==='task'){
     var s=$('#m-block');if(s){var cur=s.value;s.innerHTML=blockOpts(e.target.value,cur);if(!$$('option',s).some(function(o){return o.value===cur}))s.value=''}
   }
@@ -1198,6 +1348,10 @@ document.addEventListener('drop',function(e){
     it.date=UI.day;it.start=null;it.blockId=null;if(it.status==='backlog')setStatus(it,'active');
   }else if(kind==='col'){
     if(UI.group==='status')setStatus(it,z.dataset.val);else it.cat=z.dataset.val;
+  }else if(kind==='quad'){
+    var q=z.dataset.q;
+    if(q==='un')it.important=null;
+    else{it.important=(q==='ui'||q==='ni');it.urgency=(q==='ui'||q==='ux')?'urgent':'normal'}
   }
   drag=null;clearDrop();save();render();
 });
@@ -1216,3 +1370,4 @@ render();
 })();
 </script>
 </body>
+</html>
