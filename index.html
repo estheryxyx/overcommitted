@@ -98,17 +98,16 @@ textarea{resize:vertical}
 .ev .t{font-weight:600;font-size:13px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ev .m{font-size:12px;color:var(--ink-2);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ed{font-size:12px;color:var(--ink-2);margin-top:2px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.fb{display:flex;flex-direction:column;border:1px dashed color-mix(in srgb,var(--c) 65%,var(--surface));border-radius:12px;background:color-mix(in srgb,var(--c) 5%,var(--surface));padding:7px 10px;z-index:1}
+.fb{display:flex;flex-direction:column;border:1px dashed color-mix(in srgb,var(--c) 65%,var(--surface));border-radius:12px;background:color-mix(in srgb,var(--c) 5%,var(--surface));padding:5px 9px;z-index:1}
 .fb.over{background:color-mix(in srgb,var(--c) 16%,var(--surface));border-style:solid}
-.fbh{display:flex;gap:8px;align-items:baseline;min-width:0}
+.fbh{display:flex;gap:8px;align-items:baseline;min-width:0;line-height:1.3}
 .fbt{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fbm{font-size:12px;color:var(--ink-2);white-space:nowrap;flex:none}
 .fbd{font-size:12px;color:var(--ink-2);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none}
-.fbl{margin-top:6px;overflow:auto;min-height:0;display:flex;flex-direction:column;gap:4px}
-.fbr{display:flex;gap:8px;align-items:center;padding:4px 9px;border-radius:8px;background:var(--surface);border:1px solid var(--line);cursor:grab;font-size:13px}
+.fbl{margin-top:4px;overflow:auto;min-height:0;display:flex;flex-direction:column;gap:3px}
+.fbr{display:flex;gap:8px;align-items:center;padding:1px 7px;border-radius:8px;background:var(--surface);border:1px solid var(--line);cursor:grab;font-size:12.5px;line-height:1.35}
 .fbr span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fbadd{align-self:flex-start;border:0;background:none;color:var(--ink-2);font-size:12px;font-weight:500;padding:2px 4px}
-.fb.short .fbl,.fb.short .fbd{display:none}
 .ev.done,.item.done,.kc.done,.fbr.done{opacity:.5}
 .ev.done .t,.item.done .it,.kc.done .kt,.fbr.done span{text-decoration:line-through}
 .now{position:absolute;left:57px;right:0;height:0;border-top:1.5px solid var(--now);z-index:5;pointer-events:none}
@@ -358,6 +357,21 @@ textarea{resize:vertical}
 .idrop{left:2px;right:2px}
 .idrop::after{left:auto;right:0;top:-17px}
 .dpre{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+
+/* focus block summaries + card */
+.fbmore{align-self:flex-start;border:0;background:none;color:var(--accent);font-size:12px;font-weight:600;padding:2px 4px;line-height:1.3}
+.fbs{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;line-height:1.35;flex:none}
+.fbs .d{text-decoration:line-through;opacity:.6}
+.fdots{display:inline-flex;gap:3px;margin-left:auto;flex:none;align-self:center}
+.fdots i{width:7px;height:7px;border-radius:50%;border:1.2px solid var(--c)}
+.fdots i.on{background:var(--c)}
+.sheet.card-sm{width:min(440px,100%)}
+.bch{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
+.bch h2{font-size:26px;margin-bottom:4px}
+.bcl{display:flex;flex-direction:column;gap:6px;margin:6px 0 16px}
+.bcr{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line);border-left:3px solid var(--c);border-radius:10px;background:var(--surface)}
+.bct{flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bcr.done .bct{text-decoration:line-through;opacity:.55}
 
 /* modal + toast */
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--scrim);align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));z-index:50}
@@ -674,6 +688,9 @@ function itemHTML(t,showDate){
     urgPill(t)+dlHTML(t)+tagHTML(t.cat)+
     (showDate&&t.date?'<span class="when">'+fDM(t.date)+'</span>':'')+'</div>';
 }
+function fbRow(t){
+  return '<div class="fbr'+(isDone(t)?' done':'')+'" draggable="true" data-kind="task" data-id="'+t.id+'" data-act="edit" style="--c:'+esc(col(t.cat))+'"><button class="check'+(isDone(t)?' on':'')+'" data-act="toggle" data-id="'+t.id+'" aria-label="Mark as done"></button><span>'+esc(t.title)+'</span></div>';
+}
 function calHTML(sched,blocks,habs,isToday){
   var h='<div class="cal" id="cal"><div class="tg" data-drop="cal">';
   for(var i=0;i<24;i++)h+='<div class="hour" style="top:'+(i*HH)+'px"><span>'+pad(i)+':00</span></div>';
@@ -690,13 +707,23 @@ function calHTML(sched,blocks,habs,isToday){
     var c=catOf(b.cat),p=pos('b'+b.id,b.start,b.dur||60),end=b.start+(b.dur||60);
     if(b.kind==='focus'){
       var bt=S.tasks.filter(function(t){return t.blockId===b.id});
-      var rows=bt.map(function(t){
-        return '<div class="fbr'+(isDone(t)?' done':'')+'" draggable="true" data-kind="task" data-id="'+t.id+'" data-act="edit" style="--c:'+esc(col(t.cat))+'"><button class="check'+(isDone(t)?' on':'')+'" data-act="toggle" data-id="'+t.id+'" aria-label="Mark as done"></button><span>'+esc(t.title)+'</span></div>';
-      }).join('');
-      h+='<div class="fb'+(p.ht<70?' short':'')+'" draggable="true" data-kind="block" data-id="'+b.id+'" data-act="edit-block" data-drop="block" style="--c:'+esc(c.color)+';'+p.css+'">'+
-        '<div class="fbh"><span class="fbt">'+esc(b.title)+'</span><span class="fbm">'+fTime(b.start)+'–'+fTime(end)+(bt.length?', '+bt.length+(bt.length===1?' task':' tasks'):'')+'</span></div>'+
-        (b.desc&&p.ht>=110?'<div class="fbd">'+esc(b.desc)+'</div>':'')+
-        '<div class="fbl">'+rows+'<button class="fbadd" data-act="new-task" data-block="'+b.id+'">+ Add task</button></div></div>';
+      var nt=bt.length,cap=Math.floor((p.ht-34)/24),mode='head';
+      /* rows when every task fits (or at least two do), a one-line summary when it is short, header only when tiny */
+      if(nt<=cap||cap>=2)mode='rows';else if(p.ht>=48&&nt>0)mode='line';
+      var shown=mode==='rows'?(nt<=cap?bt:bt.slice(0,Math.max(cap-1,0))):[];
+      var more=mode==='rows'?nt-shown.length:0;
+      var body='';
+      if(mode==='rows'){
+        body='<div class="fbl">'+shown.map(fbRow).join('')+
+          (more?'<button class="fbmore" data-act="open-block" data-id="'+b.id+'">+ '+more+' more</button>':'')+
+          ((!more&&cap>=nt+1)?'<button class="fbadd" data-act="new-task" data-block="'+b.id+'">+ Add task</button>':'')+'</div>';
+        if(!nt&&b.desc&&p.ht>=60)body='<div class="fbd">'+esc(b.desc)+'</div>'+body;
+      }else if(mode==='line'){
+        body='<div class="fbs">'+bt.map(function(t){return '<span class="'+(isDone(t)?'d':'')+'">'+esc(t.title)+'</span>'}).join(', ')+'</div>';
+      }
+      var dots=(mode!=='rows'&&nt)?'<span class="fdots">'+bt.slice(0,8).map(function(t){return '<i class="'+(isDone(t)?'on':'')+'"></i>'}).join('')+'</span>':'';
+      h+='<div class="fb" draggable="true" data-kind="block" data-id="'+b.id+'" data-act="open-block" data-drop="block" style="--c:'+esc(c.color)+';'+p.css+'">'+
+        '<div class="fbh"><span class="fbt">'+esc(b.title)+'</span><span class="fbm">'+fTime(b.start)+'–'+fTime(end)+(nt?', '+nt+(nt===1?' task':' tasks'):'')+'</span>'+dots+'</div>'+body+'</div>';
     }else{
       h+='<div class="ev event'+(p.ht<44?' short':'')+'" draggable="true" data-kind="block" data-id="'+b.id+'" data-act="edit-block" style="--c:'+esc(c.color)+';'+p.css+'">'+
         '<div class="evt"><div class="t">'+esc(b.title)+'</div><div class="m">'+fTime(b.start)+'–'+fTime(end)+', '+esc(c.name)+'</div>'+(b.desc&&p.ht>=76?'<div class="ed">'+esc(b.desc)+'</div>':'')+'</div></div>';
@@ -1247,6 +1274,17 @@ function hlogModal(id){
     '<label class="field"><span>Status</span><select id="m-hdone">'+selOpts([['0','Not done yet'],['1','Done']],x.done?'1':'0')+'</select></label>'+
     (hb.desc?'<p class="muted" style="margin:0 0 12px">'+esc(hb.desc)+'</p>':'')+foot('Remove from calendar')+'</div>');
 }
+function blockCard(id){
+  var b=blockById(id);if(!b)return;
+  var bt=S.tasks.filter(function(t){return t.blockId===b.id}),dn=bt.filter(isDone).length;
+  openModal({type:'bcard',id:id},'<div class="sheet card-sm"><div class="bch"><div><h2>'+esc(b.title)+'</h2><p class="muted" style="margin:0">'+fTime(b.start)+' to '+fTime(Math.min(1440,b.start+(b.dur||60)))+', '+fShort(b.date)+(bt.length?', '+dn+' of '+bt.length+' done':'')+'</p></div>'+
+    '<button class="btn sm" data-act="edit-block" data-id="'+id+'">✎ Edit</button></div>'+
+    (b.desc?'<p class="muted" style="margin:0 0 12px">'+esc(b.desc)+'</p>':'')+
+    '<div class="bcl">'+(bt.length?bt.map(function(t){
+      return '<div class="bcr'+(isDone(t)?' done':'')+'" style="--c:'+esc(col(t.cat))+'"><button class="check'+(isDone(t)?' on':'')+'" data-act="card-toggle" data-id="'+t.id+'" aria-label="Mark as done"></button><button class="bct" data-act="card-edit" data-id="'+t.id+'">'+esc(t.title)+'</button>'+tagHTML(t.cat)+'</div>';
+    }).join(''):'<p class="muted" style="margin:0">No tasks yet. Add one here, or drag a task onto the block.</p>')+'</div>'+
+    '<div class="mfoot"><button class="btn" data-act="new-task" data-block="'+id+'">+ Add task</button><button class="btn primary" data-act="m-close">Done</button></div></div>');
+}
 function planModal(id){
   var p=id?planById(id):{title:'',why:'',cat:S.cats[0].id,target:''};if(!p)return;
   openModal({type:'plan',id:id||null},'<div class="sheet"><h2>'+(id?'Edit grand plan':'New grand plan')+'</h2>'+
@@ -1391,12 +1429,14 @@ function addExamples(){
   S.blocks.push(fb);
   S.blocks.push({id:uid(),kind:'event',title:'Supervision',cat:c(0),date:td,start:14*60,dur:60,desc:'Bring the essay plan and two questions.',created:Date.now()});
   S.blocks.push({id:uid(),kind:'event',title:'Society committee meeting',cat:c(4),date:td,start:18*60,dur:90,desc:'',created:Date.now()});
+  var ab={id:uid(),kind:'focus',title:'Admin sprint',cat:c(3),date:td,start:12*60,dur:60,desc:'',created:Date.now()};S.blocks.push(ab);
   S.blocks.push({id:uid(),kind:'focus',title:'Applications sprint',cat:c(1),date:addDays(td,1),start:10*60,dur:120,desc:'',created:Date.now()});
   T('Draft the intro of this week’s essay',0,{date:td,blockId:fb.id});
   T('Annotate two papers',0,{date:td,blockId:fb.id,notes:'Focus on the methods sections.'});
   T('Tidy CV bullet points',1,{date:td,start:16*60,dur:60,notes:'Quantify results wherever possible.'});
-  T('Reply to the society sponsor email',4,{date:td});
-  T('Book a room for the next meeting',3,{date:td});
+  T('Reply to the society sponsor email',4,{date:td,blockId:ab.id});
+  T('Book a room for the next meeting',3,{date:td,blockId:ab.id});
+  T('Update the JCR budget sheet',3,{date:td,blockId:ab.id});
   T('Read two papers for next week',0,{date:addDays(td,2)});
   T('Submit expenses claim',5,{date:addDays(td,-2)});
   T('Shortlist roles to apply for',1,{status:'backlog'});
@@ -1461,6 +1501,9 @@ document.addEventListener('click',function(e){
       taskModal(null,p);break}
     case 'edit':taskModal(id);break;
     case 'edit-block':itemModal(null,id);break;
+    case 'open-block':blockCard(id);break;
+    case 'card-edit':taskModal(id);break;
+    case 'card-toggle':{var ct=taskById(id);if(ct){setStatus(ct,isDone(ct)?'active':'done');save();render();if(M&&M.type==='bcard')blockCard(M.id)}break}
     case 'toggle':toggleDone(id);break;
     case 'qa-add':quickAdd();break;
     case 'group':UI.group=el.dataset.g;render();break;
